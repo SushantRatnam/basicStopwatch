@@ -6,21 +6,24 @@ class Stopwatch extends Component {
     isRunning: false
   };
 
-  handleStart = () => {
+  handleToggle = () => {
     if (this.state.isRunning === false) {
       this.setState({ isRunning: true });
       this.totalTime();
+    }
+    else{
+      this.handleStop();
     }
   };
 
   handleStop = () => {
     clearInterval(this.interval);
-    this.setState({isRunning: false})
-  }
+    this.setState({ isRunning: false });
+  };
 
   handleReset = () => {
-    this.setState({secondsElapsed: 0})
-  }
+    this.setState({ secondsElapsed: 0 });
+  };
 
   totalTime = () => {
     this.interval = setInterval(() => {
@@ -28,7 +31,7 @@ class Stopwatch extends Component {
         ...prevState,
         secondsElapsed: prevState.secondsElapsed + 1
       }));
-    }, 1000);
+    }, 100);
   };
 
   getSeconds = function() {
@@ -39,14 +42,17 @@ class Stopwatch extends Component {
     return Math.floor(this.state.secondsElapsed / 60);
   };
 
+  buttonName = function(){
+    //return "Start";
+    return this.state.isRunning===false ? "Start" : "Stop";
+  }
   render() {
     return (
       <React.Fragment>
         <h1>
           {this.getMinutes()}:{this.getSeconds()}
         </h1>
-        <button onClick={this.handleStart}>Start</button>
-        <button onClick={this.handleStop}>Stop</button>
+        <button onClick={this.handleToggle}>{this.buttonName()}</button>
         <button onClick={this.handleReset}>Reset</button>
       </React.Fragment>
     );
