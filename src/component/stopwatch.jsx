@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import 'bootstrap/dist/css/bootstrap.css';
+import '../component/stopwatch.css'
 class Stopwatch extends Component {
   state = {
     secondsElapsed: 0,
@@ -10,8 +11,7 @@ class Stopwatch extends Component {
     if (this.state.isRunning === false) {
       this.setState({ isRunning: true });
       this.totalTime();
-    }
-    else{
+    } else {
       this.handleStop();
     }
   };
@@ -31,7 +31,7 @@ class Stopwatch extends Component {
         ...prevState,
         secondsElapsed: prevState.secondsElapsed + 1
       }));
-    }, 100);
+    }, 1000);
   };
 
   getSeconds = function() {
@@ -42,18 +42,22 @@ class Stopwatch extends Component {
     return Math.floor(this.state.secondsElapsed / 60);
   };
 
-  buttonName = function(){
+  buttonName = function() {
     //return "Start";
-    return this.state.isRunning===false ? "Start" : "Stop";
-  }
+    return this.state.isRunning === false ? "Start" : "Stop";
+  };
   render() {
     return (
-      <React.Fragment>
-        <h1>
+      <React.Fragment className="content">
+        <h1 >
           {this.getMinutes()}:{this.getSeconds()}
         </h1>
-        <button onClick={this.handleToggle}>{this.buttonName()}</button>
-        <button onClick={this.handleReset}>Reset</button>
+   <div className="btnGrp">
+        <button className="btn btn-primary" onClick={this.handleToggle}>
+          {this.buttonName()}
+        </button> &nbsp;
+        <button className="btn btn-primary" onClick={this.handleReset}>Reset</button>
+        </div>
       </React.Fragment>
     );
   }
